@@ -1,0 +1,275 @@
+---
+title: "CUNY MSDA 606 Spring 2016 Ch. 3 Graded Problems"
+author: "James Topor"
+output: pdf_document
+---
+  
+  
+Chapter 3, Problems 3.2 (see normalPlot), 3.4, 3.18 (use qqnormsim from lab 3), 3.22, 3.38, 3.42
+
+```{r, echo=FALSE, include=FALSE}
+# load IS606 for normalPlot, qqnormsim functions
+library('IS606')
+```
+
+# ----------------------------------------------------------------
+__3.2__
+(see normalPlot) 
+
+What percent of a standard normal distribution N(mu = 
+0; stddev = 1) is found in each region? Be sure to draw a graph.
+
+__a)__ Z > -1.13
+
+```{r}
+1 - pnorm(-1.13, 0, 1)
+normalPlot(0, 1, bounds = c(-1.13, 6))
+```
+
+
+__b)__ Z < 0.18
+
+```{r}
+pnorm(.18, 0, 1)
+normalPlot(0, 1, bounds = c(-6, .18))
+```
+
+__c)__ Z > 8
+
+```{r}
+1 - pnorm(8, 0, 1)
+normalPlot(0, 1, bounds = c(8, 9))
+```
+
+__d)__ |Z| < 0.5
+```{r}
+pnorm(.5, 0, 1) - pnorm(-.5, 0, 1)
+normalPlot(0, 1, bounds = c(-.5, .5))
+```
+
+
+# ----------------------------------------------------------------
+__3.4__
+Men, Ages 30 - 34 group has a mean of 4313 seconds with a
+standard deviation of 583 seconds, distribution normal. 
+
+Women, Ages 25 - 29 group has a mean of 5261 seconds with a
+standard deviation of 807 seconds, distribution normal.  
+
+Leo = 4948  
+Mary = 5513  
+
+__a)__ Short-hand for these two normal distributions:
+
+Men(30 - 34) = N(mu = 4313, stddev = 583)  
+Women(25-29) = N(mu = 5261, stddev = 807)  
+
+__b)__ What are the Z-scores for Leo's and Mary's finishing times? What do these Z-scores tell you?
+
+Z(Leo) = (4948 - 4313) / 583:
+```{r, echo=FALSE}
+(4948 - 4313) / 583
+```
+
+Z(Mary) = (5513 - 5261) / 807:
+```{r, echo=FALSE}
+(5513 - 5261) / 807
+```
+
+The Z scores tell us that Leo finished 1.089 standard deviations above the mean finish time for his gender/age group while Mary finished .312 standard deviations above the mean finish time for her gender/age group.
+
+__c)__ Did Leo or Mary rank better in their respective groups? Explain your reasoning.
+
+Since the Z scores represent difference between the finisher's time from the mean finishing time for a triathalon, a lower Z score is indicative of a relatively better finishing time within one's competitive group. In other words, the lower your Z score, the better you performed relative to your peer group. As such, Mary had a better finish time within her gender/age group than did Leo despite the fact that Leo had a faster overall finishing time.
+
+__d)__ What percent of the triathletes did Leo finish faster than in his group?
+
+```{r}
+1 - pnorm(4948, 4313, 583)
+normalPlot(4313, 583, bounds = c(4948, 8000))
+```
+
+Leo finished ahead of 13.8% of triathletes in his group
+
+
+__e)__ What percent of the triathletes did Mary finish faster than in her group?
+
+```{r}
+1 - pnorm(5513, 5261, 807)
+normalPlot(5261, 807, bounds = c(5513, 8000))
+```
+
+Mary finished ahead of 37.7% of triathletes in her group
+
+
+__f)__ If the distributions of finishing times are not nearly normal, would your answers to parts (b) - (e) change? Explain your reasoning.
+
+The answers to __b)__ would not change because we can compute Z scores for 
+non-normal distributions. 
+
+Similarly, the answer for __c)__ would also remain valid since it is relying solely on the Z scores to conclude that Mary performed better within her group than did Leo.
+
+However, the answers to __d)__ and __e)__ would not be discernible since we wouldn't be able to calculate percentiles using normal distribution assumptions.
+
+
+# ----------------------------------------------------------------
+__3.18__
+(use qqnormsim from lab 3)
+
+__a)__ Is the 68, 95, 99 rule followed?  
+
+```{r}
+fHgt <- c(54, 55, 56, 56, 57, 58, 58, 
+             59, 60, 60, 60, 61, 61, 
+             62, 62, 63, 63, 63, 64, 65,
+             65, 67, 67, 69, 73)
+             
+summary(fHgt)
+fhMean <- mean(fHgt)
+fhStd <- sd(fHgt)
+```
+
+
+__.68 test__
+```{r}
+pnorm( (fhMean + fhStd), fhMean, fhStd) - pnorm((fhMean - fhStd), fhMean, fhStd)
+```
+
+__.95 test__
+```{r}
+pnorm( (fhMean + (2 * fhStd)), fhMean, fhStd) - pnorm((fhMean - (2 * fhStd)), fhMean, fhStd)
+```
+
+__.99 test__
+```{r}
+pnorm( (fhMean + (3 * fhStd)), fhMean, fhStd) - pnorm((fhMean - (3 * fhStd)), fhMean, fhStd)
+```
+
+These results demonstrate that the heights approximately follow the 68-95-99.7% Rule.
+
+__b)__ Yes the data appear to follow a normal distribution. The distribution is approximately bell shaped as shown in the histogram and __qqnormsim__ plot (see below) shows that the empirical data are reasonably close to fitting a the line that represents a theoretically ideal normal distribution. Additionally, as shown in the output of R's __summary__ function above, the median value is approximately equal to the mean which indicates that we are not dealing with a meaningfully skewed distribution.
+
+```{r}
+qqnormsim(fHgt)
+```
+
+# ----------------------------------------------------------------
+__3.22__
+2% defect rate
+
+__a)__ What is the probability that the 10th transistor produced is the first with a defect?  
+
+```{r}
+.98^9 * .02
+```
+
+__b)__ What is the probability that the machine produces no defective transistors in a batch of 100?  
+
+```{r}
+.98^100
+```
+
+__c)__ On average, how many transistors would you expect to be produced before the first with a defect? What is the standard deviation?  
+
+1/p = 1/.02 = 
+
+```{r}
+1/.02
+```
+
+What is the standard deviation?
+
+sqrt( (1-p) / p^2 ) = 
+```{r}
+sqrt( (1 - .02) / (.02^2) )
+```
+
+
+__d)__ 5% defective: how many transistors would you expect to be produced with this machine before the first with a defect? What is the standard deviation?  
+
+1/p = 1/.05 =  
+```{r}
+1/.05
+```
+
+What is the standard deviation?  
+
+sqrt( (1-p) / p^2 ) =  
+```{r}
+sqrt( (1 - .05) / (.05^2) )
+```
+
+__e)__  Increasing the probability of an event means the event is less rare. This decreases both the mean and standard deviation of the wait time until success.
+
+
+# ----------------------------------------------------------------
+__3.38__ 
+
+P(boy) = .51, couple plan to have 3 kids
+
+__a)__ Use the binomial model to calculate the probability that two of them will be boys.
+
+We have 3 independent trials:  
+```{r}
+n <- 3
+k <- 2
+p <- .51
+
+choose(n,k) * (p^k) * ((1 - p)^(n - k))
+```
+
+So the probability of two of the three children being boys is .382347  
+
+
+__b)__ Write out all possible orderings of 3 children / 2 boys:  
+
+bbg = .51 * .51 * .49  
+bgb = .51 * .49 * .51  
+gbb = .51 * .51 * .49  
+
+Probs =  3 * (.51 * .51 * .49)  
+```{r}
+3 * (.51 * .51 * .49)
+```
+
+
+The answers from a) and b) match.  
+
+
+__c)__ If we wanted to calculate the probability that a couple who plans to have 8 kids will have 3 boys, briefly describe why the approach from part (b) would be more tedious than the approach from part (a).
+
+The approach from part __b)__ would require us to write out every possible combination of ways to have 3 boys out of a total of 8 children and then calculate their respective probabilities. The total number of possible combinations is:
+
+```{r}
+choose(8,3)
+```
+
+Writing out such a large number of combinations would be very tedious and prone to errors. As such, it would be preferable to use the approach from part __a)__ to solve this problem.  
+
+# ----------------------------------------------------------------
+__3.42__
+
+p = .15, events independent
+
+__a)__ What is the probability that on the 10th try she will make her 3rd successful serve?
+
+```{r}
+n <- 10
+k <- 3
+p <- .15
+
+choose (n-1, k-1) * p^k * (1 - p)^(n-k)
+```
+
+
+__b)__ Suppose she has made two successful serves in nine attempts. What is the probability that her 10th serve will be successful?  
+
+Since the events are independent, the probability of any particular serve is .15. As such, the probability of her 10th serve being successful is .15  
+
+__c)__ Even though parts (a) and (b) discuss the same scenario, the probabilities you calculated should be different. Can you explain the reason for this discrepancy?  
+
+In part __a)__ we were interested in a dependent scenario, specifically the case in which the server has previously had 2 successful serves out of 9 and we are interested in finding the probability that the 10th serve will be her third successful serve overall. 
+
+In part __b)__ we are asked for the independent probability that that single serve will be successful. 
+
+As such, the two probabilities we were asked to find are not identical, with one representing the probability of a chain of events occurring and the other being the probability of a single event.
