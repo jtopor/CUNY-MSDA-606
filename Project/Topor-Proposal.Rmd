@@ -1,0 +1,331 @@
+---
+title: "CUNY MSDA 606 Spring 2016 Project Proposal"
+author: "James Topor"
+output:
+  pdf_document: default
+  html_document:
+    highlight: tango
+---
+
+```{r include=FALSE, cache=FALSE}
+# DO NOT REMOVE
+# THIS IS FOR SETTING SOME PLOTTING PARAMETERS SO THAT YOUR PLOTS DON'T TAKE UP TOO MUCH SPACE
+# IF YOU WOULD LIKE TO CHANGE THESE, SEE HELP FILES ON THE par() FUNCTION
+# OR ASK FOR HELP
+library(knitr)
+## set global chunk options
+opts_chunk$set(fig.path='figure/manual-', cache.path='cache/manual-', fig.align='center', fig.show='hold', par=TRUE)
+## tune details of base graphics (http://yihui.name/knitr/hooks)
+knit_hooks$set(par=function(before, options, envir){
+if (before && options$fig.show!='none') par(mar=c(5,4,1.2,.5),cex.lab=.95,cex.axis=.9,mgp=c(2,.7,0),tcl=-.3)
+})
+```
+
+# ---------------------------------------------------------------------------
+### Research question 
+
+The earth's climate is affected by a variety of phenomena, many of which are external to the earth's atmosphere. These include the wobble of the earth's axis, gamma rays that continuously bombard the planet's atmosphere from outer space, the rate at which the earth's oceans absorb and release heat, natural variations in the earth's orbit around the sun, and variations in the sun's irradiance resulting from the sun's own internal stellar dynamics. 
+
+For example, scientists have long speculated on the possibility of a relationship between sunspot activity and variations in the earth's atmospheric temperatures and precipitation. Fortunately, regular periodic observations of sunspot counts, atmospheric temperatures, and precipitation for the past 120 years or so are readily available to us. As such, we can conduct our own analysis into the relationship between sunspots and some of the earth's climatic variations. 
+
+Specifically, we will examine the following:
+
+1) Whether the average number of sunspots observed within a given calendar year might be predictive of the average atmospheric temperature observed within the continental United States for that same calendar year;
+
+2) Whether the average number of sunspots observed within a given calendar year might be predictive of the average precipitation amount observed within the continental United States for that same calendar year.
+
+To facilitate this analysis we will be drawing on data from two separate sources: one of which records sunspot observations on a regular basis; and another which tracks atmospheric temperature and precipitation observations for the continental United States. Both are described in greater detail in the sections labeled "__Data Collection__" and "__Data Source__".
+
+# ---------------------------------------------------------------------------
+### Cases 
+
+Each case is comprised of three distinct observations recorded for each calendar year for the years 1900 - 2015. The three observations are:
+
+1) The average number of sunspots observed daily as recorded by The Royal Observatory of Belgium.
+2) The average of recorded atmospheric temperatures throughout the continental United States.
+3) The average of recorded precipitation amount throughout the continental United States.
+
+We have a total of 116 cases: one for each calendar year for the years 1900 - 2015.
+
+# ---------------------------------------------------------------------------
+### Data collection 
+
+__Sunspot Data__  
+Scientists at the Royal Observatory of Belgium have recorded daily sunspot observations since January, 1818. Access to the data repository containing those observations is available via the internet at the following web page:
+
+http://www.sidc.be/silso/datafiles
+
+The specific sunspot data set used for this analysis can be obtained from that web page by scrolling down to the item labeled
+__"Yearly mean total sunspot number [1700 - now]"__ and selecting the __CSV__ option, which generates a .csv file containing the mean number of daily sunspot observations for each calendar year for the period 1700 - 2015.
+
+The .csv file contains 5 columns of data described as follows (source: http://www.sidc.be/silso/infosnytot):
+
+- __Column 1__: Gregorian calendar year (mid-year date)  
+- __Column 2__: Yearly mean total sunspot number.  
+- __Column 3__: Yearly mean standard deviation of the input sunspot numbers from individual stations.  
+- __Column 4__: Number of observations used to compute the yearly mean total sunspot number.  
+- __Column 5__: Definitive/provisional marker. '1' indicates that the value is definitive. '0' indicates that the value is still provisional.  
+
+
+From this .csv file we will utilize data for the years 1900 - 2015 as part of our analysis.  
+
+# ---------------------  
+__Atmospheric Temperature and Precipitation Data__  
+The National Oceanic and Atmospheric Administration maintains a repository of climate-related observations that is accessible via the internet. Individual temperature and precipitation measurements are recorded at 1,218 different locations throughout the continental United States on a daily basis. The NOAA aggregates those measurements and computes average temperature and precipitation amounts for the continental United States and updates its online repository of that data on a regular basis.
+
+Average temperature observations for the continental United States for the period 1900 - 2015 can be obtained via the following web page:
+
+http://www.ncdc.noaa.gov/cag/time-series/us/110/0/tavg/12/12/1900-2015 
+
+The specific data set to be used in this analysis can be obtained as follows from that web page:  
+
+- For __"Parameter"__ select "Average Temperature" from the drop down list;  
+- For __"Time Scale"__ select "12-Month";  
+- For __"Month"__ select "December";  
+- For __"Start Year"__ select "1900";  
+- For __"End Year"__ select "2015"  
+- For __"State(Region)"__ select "Contiguous US"  
+- For __"Climate Division/City"__ select "All 48 States"  
+
+Then, click the "__Plot__" button. Once plotting has been completed, the data set is displayed on that page and can be downloaded as a .csv by scrolling to the "__Download__" label and clicking the MS Excel icon. The .csv file will have a header that explains the two columns of data therein.
+
+Precipitation observations for the continental United States for the period 1900 - 2015 can be obtained via the following web page:
+
+http://www.ncdc.noaa.gov/cag/time-series/us/110/0/pcp/12/12/1900-2015  
+
+The specific data set to be used in this analysis can be obtained as follows from that web page:  
+
+- For __"Parameter"__ select "Precipitation" from the drop down list;  
+- For __"Time Scale"__ select "12-Month";  
+- For __"Month"__ select "December";  
+- For __"Start Year"__ select "1900";  
+- For __"End Year"__ select "2015"  
+- For __"State(Region)"__ select "Contiguous US"  
+- For __"Climate Division/City"__ select "All 48 States"  
+
+Then, click the "__Plot__" button. Once plotting has been completed, the data set is displayed on that page and can be downloaded as a .csv by scrolling to the "__Download__" label and clicking the MS Excel icon. The .csv file will have a header that explains the two columns of data therein.
+
+# ---------------------------------------------------------------------------
+### Type of study 
+
+Since we are relying upon data recorded each year for the period 1900 - 2015, this is strictly a retrospective observational study.
+
+# ---------------------------------------------------------------------------
+### Data Sources 
+
+__Sunspot Data__   
+As noted above, the sunspot data is provided by The Royal Observatory of Belgium. Their website is: 
+
+http://www.sidc.be/silso/home
+
+The proper citation for the Royal Observatory of Belgium and the data contained therein is:
+
+Source: WDC-SILSO, Royal Observatory of Belgium, Brussels.
+
+# ---------------------  
+__Atmospheric Temperature and Precipitation Data__   
+
+As noted above, atmospheric temperature and precipitation data have been obtained via the National Oceanic and Atmospheric Adminstration (NOAA), which is a branch of the United States Department of Commerce. Their website is:
+
+http://www.ncdc.noaa.gov/
+
+The temperature and precipitation data used in this analysis are accessible via this specific web page:  
+
+http://www.ncdc.noaa.gov/cag/
+
+# ---------------------------------------------------------------------------
+### Response Variables
+
+For purposes of this analysis we will be examing two separate response variables:
+
+1) __Average Temperature__: A continuous numeric variable whose value represents an average of recorded atmospheric temperatures in degrees Farenheit throughout the continental United States for a given calendar year for the years 1900 - 2015.
+
+2) __Average Precipitation__: A continuous numeric variable whose value represents an average of recorded precipitation measured in inches throughout the continental United States for a given calendar year for the years 1900 - 2015. All forms of atmospheric precipitation, including rain, snow, sleet, and hail, are encompassed by this variable. (*NOTE: The NOAA converts all non-rain precipitation measures to a rain-equivalent metric, thereby ensuring a standard unit of measurement for all types of precipitation*).
+
+# ---------------------------------------------------------------------------
+### Explanatory Variable
+
+For purposes of this analysis we will utilize a single explanatory variable:
+
+- __Average Sunspot Count__: A continuous numeric variable representing the mean daily number of sunspots observed within a given calendar year for the years 1900 - 2015 as recorded by the Royal Observatory of Belgium.
+
+# ---------------------------------------------------------------------------
+### Relevant summary statistics 
+
+__Sunspot Data__  
+Prior to computing summary statistics we need to refine the raw sunspot data so that it conforms with our intended analytical approach.
+
+__Step 1__: Read the .csv file containing sunspot data into a dataframe. (*NOTE: The .csv file has no header info*):
+```{r}
+
+# Read raw sunspot data from semicolon delimited CSV file
+sscsv <- read.csv("https://raw.githubusercontent.com/jtopor/CUNY-MSDA-606/master/Project/ss_obs.csv", 
+                  sep=";", header = FALSE, stringsAsFactors = FALSE)
+
+str(sscsv)
+
+head(sscsv)
+```
+
+__Step 2:__ Create a data frame using the 2 specific columns containing the calendar year and the correspondig sunspot observation metric, trimming whitespaces where needed:
+  
+```{r}
+ssdf <- data.frame(sscsv$V1, sscsv$V2)
+
+head(ssdf)
+```
+
+
+__Step 3:__ Rename columns to match full attribute names
+  
+```{r}
+names(ssdf)
+
+names(ssdf)<-c("Year","AvgSpots")
+
+row.names(ssdf)<-NULL
+
+names(ssdf)
+```
+
+__Step 4:__ Substract 0.5 from each year to get a precise calendar year value
+```{r}
+ssdf$Year <- ssdf$Year - 0.5
+head(ssdf$Year)
+```
+
+__Step 5:__ Discard data for years prior to 1900
+```{r}
+ssdf <- subset(ssdf, Year >= 1900)
+row.names(ssdf)<-NULL
+head(ssdf)
+```
+
+Now that the sunspot data has been refined to include data for only the years 1900 - 2015, we can compute some summary metrics:
+
+```{r}
+nrow(ssdf)
+```
+As we can see from the output or R's __nrow__ function, the data frame we've obtained via our sunspot data refinement efforts has the 116 cases we described earlier.
+
+Let's take a look at the output of R's __summary__ and __sd__ functions for our sunspot data:
+```{r}
+summary(ssdf$AvgSpots)
+sd(ssdf$AvgSpots)
+```
+The mean number of sunspots observed each year for the period 1900 - 2015 is 88.24, the median is 76.25, and the standard deviation is 66.945. Since the mean is so much larger than the median, it appears that we have a right-skewed distribution. A plot of a histogram of the individual values confirms this:
+
+
+```{r, echo=FALSE}
+hist(ssdf$AvgSpots, main = 'Average Sunspots Counts, 1900 - 2015', xlab = 'Number of Sunspots Observed', breaks = 10)
+```
+
+# ---------------------  
+__Temperature Data__  
+
+Our refinement of the pertinent temperature data is as follows:
+
+__Step 1__: Read the .csv file containing temperature data into a dataframe. (*NOTE: The .csv file does have header info on its third line*):
+```{r}
+
+# Read temperature data from CSV file. Skip the first 2 lines since header is on third line
+tempdf <- read.csv("https://raw.githubusercontent.com/jtopor/CUNY-MSDA-606/master/Project/tempUS.txt", 
+                   header = TRUE, skip=2, stringsAsFactors = FALSE)
+
+str(tempdf)
+
+head(tempdf)
+```
+
+
+__Step 2:__ Truncate last 2 digits of all 'Date' values since they aren't needed for our analysis
+```{r}
+# convert 'year' values to string
+truncYear <- as.character(tempdf$Date)
+head(truncYear)
+
+# truncate last 2 characters
+truncYear <- substr(truncYear, 1, nchar(truncYear)-2)
+head(truncYear)
+
+# convert the 'year' strings back to numeric format
+tempdf$Date <- as.numeric(truncYear)
+
+head(tempdf)
+```
+
+
+Now that the temperature data has been refined we can compute some summary metrics:
+
+```{r}
+nrow(tempdf)
+```
+As we can see from the output or R's __nrow__ function, the data frame we've obtained via our temperature data refinement efforts has the 116 cases we described earlier.
+
+Let's take a look at the output of R's __summary__ and __sd__ functions for our sunspot data:
+```{r}
+summary(tempdf$Value)
+sd(tempdf$Value)
+```
+The temperature readings for the continental United States for the years 1900-2015 have a mean of 52.2, a median of 51.98, and a standard deviation of 0.9327. The mean being greater than the median suggests that we once again may be dealing with a skewed distribution. A plot of a histogram for the temperature data reveals a right-skew characteristic:
+
+
+```{r, echo=FALSE}
+hist(tempdf$Value, main = 'Average Surface Temps, 1900 - 2015', xlab = 'Average Temp', breaks = 10)
+```
+
+# ---------------------
+__Precipitation Data__
+
+Our refinement of the pertinent precipitation data is as follows:
+
+__Step 1__: Read the .csv file containing precipitation data into a dataframe. (*NOTE: The .csv file does have header info on its third line*):
+```{r}
+
+# Read precipitation data from CSV file. Skip the first 2 lines since header is on third line
+precipdf <- read.csv("https://raw.githubusercontent.com/jtopor/CUNY-MSDA-606/master/Project/prcpUS.txt", 
+                     header = TRUE, skip=2, stringsAsFactors = FALSE)
+
+str(precipdf)
+
+head(precipdf)
+
+```
+
+
+__Step 2:__ Truncate last 2 digits of all 'Date' values since they aren't needed for our analysis
+```{r}
+# convert 'year' values to string
+truncYear <- as.character(precipdf$Date)
+head(truncYear)
+
+# truncate last 2 characters
+truncYear <- substr(truncYear, 1, nchar(truncYear)-2)
+head(truncYear)
+
+# convert 'year' strings back to numeric format
+precipdf$Date <- as.numeric(truncYear)
+
+head(precipdf)
+```
+
+
+Now that the precipitation data has been refined we can compute some summary metrics:
+
+```{r}
+nrow(precipdf)
+```
+As we can see from the output or R's __nrow__ function, the data frame we've obtained via our precipitation data refinement efforts has the 116 cases we described earlier.
+
+Let's take a look at the output of R's __summary__ and __sd__ functions for our sunspot data:  
+```{r}
+summary(precipdf$Value)
+sd(precipdf$Value)
+```
+
+The precipitation data for the continental United States for the years 1900-2015 have a mean of 30.04, a median of 30.28, and a standard deviation of 2.22. The mean being nearly identical to the median suggests that we may have a nearly normal distribution of average precipitation amounts. A plot of a histogram for the precipitation data reveals a slight amount of left skew:
+
+
+```{r, echo=FALSE}
+hist(precipdf$Value, main = 'Average Precip, 1900 - 2015', xlab = 'Average Precip', breaks = 10)
+```
